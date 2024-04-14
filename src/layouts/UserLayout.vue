@@ -36,10 +36,16 @@
             :key="link.title"
             v-bind="link"
           />
+          <q-item to="/auth/login">asdas</q-item>
         </q-list>
       </q-drawer>
   
       <q-page-container>
+        <div>
+        {{ $q.dark }}
+        <q-btn color="primary" label="Primary" @click="$q.dark.toggle()" />
+        login
+    </div>
         <router-view />
       </q-page-container>
     </q-layout>
@@ -96,7 +102,7 @@
       title: 'Login',
       caption: 'quasar.dev',
       icon: 'school',
-      link: '/login'
+      link: '/auth/login'
     },
   ]
   

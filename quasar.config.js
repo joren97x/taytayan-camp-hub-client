@@ -86,7 +86,29 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {},
+      config: {
+        notify: {
+          color: 'green',
+          textColor: 'white',
+          message: 'Hi this is a message',
+          html: false,
+          position: 'top'
+        },
+        dark: true,
+        brand: {
+          primary: '#0e9cff',
+          secondary: '#f7a11a',
+          accent: '#9C27B0',
+  
+          dark: '#1d1d1d',
+          'dark-page': '#121212',
+  
+          positive: '#21BA45',
+          negative: '#f2223a',
+          info: '#31CCEC',
+          warning: '#F2C037'
+        },
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -99,7 +121,9 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Notify'
+      ]
     },
 
     // animations: 'all', // --- includes all animations
