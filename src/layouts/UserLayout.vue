@@ -1,129 +1,114 @@
+<script setup>
+
+    import { ref } from 'vue'
+    import Footer from 'src/components/User/Footer.vue'
+
+    const rightDrawerOpen = ref(false)
+
+</script>
+
 <template>
-    <q-layout view="lHh Lpr lFf">
-      <q-header elevated>
-        <q-toolbar>
-          <q-btn
-            flat
-            dense
-            round
-            icon="menu"
-            aria-label="Menu"
-            @click="toggleLeftDrawer"
-          />
-  
-          <q-toolbar-title>
-            Quasar App
-          </q-toolbar-title>
-  
-          <div>Quasar v{{ $q.version }}</div>
-        </q-toolbar>
-      </q-header>
-  
-      <q-drawer
-        v-model="leftDrawerOpen"
-        show-if-above
-        bordered
-      >
-        <q-list>
-          <q-item-label
-            header
-          >
-            Essential Links
-          </q-item-label>
-  
-          <EssentialLink
-            v-for="link in essentialLinks"
-            :key="link.title"
-            v-bind="link"
-          />
-          <q-item to="/auth/login">asdas</q-item>
-        </q-list>
-      </q-drawer>
-  
-      <q-page-container>
-        <div>
-        {{ $q.dark }}
-        <q-btn color="primary" label="Primary" @click="$q.dark.toggle()" />
-        login
-    </div>
-        <router-view />
-      </q-page-container>
+    <q-layout view="hHh lpR lff">
+
+        <q-header>
+            <q-toolbar class="q-pa-md">
+                <q-toolbar-title>
+                <q-avatar>
+                    <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+                </q-avatar>
+                Taytayan Camp Hub
+                </q-toolbar-title>
+                <q-space />
+                <q-btn flat no-caps class="bordered" bordered>Milktea Menu</q-btn>
+                <q-btn flat no-caps>Explore Events</q-btn>
+                <q-btn flat no-caps>Book Campsite</q-btn>
+                <q-space />
+                <q-btn flat no-caps to="/auth/register">Register</q-btn>
+                <q-btn no-caps color="secondary" unelevated to="/auth/login">Login</q-btn>
+                <q-btn flat icon="search" round></q-btn>
+                <q-btn flat icon="notifications" round>
+                    <q-badge color="red" floating>4</q-badge>
+                    <q-menu fit>
+                        <q-list style="min-width: 400px">
+                            <q-item clickable>
+                                <q-item-section>New tab</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                                <q-item-section>New incognito tab</q-item-section>
+                            </q-item>
+                        </q-list>
+                    </q-menu>
+                </q-btn>
+                <q-btn flat round icon="shopping_cart" @click="rightDrawerOpen = !rightDrawerOpen">
+                    <q-badge color="red" floating>4</q-badge>
+                </q-btn>
+                <q-btn flat rounded :icon="$q.dark.isActive ? 'light_mode' : 'dark_mode'" @click="$q.dark.toggle()"/>
+                <q-btn flat round>
+                    <q-avatar size="42px">
+                        <img src="https://pbs.twimg.com/profile_images/1642568071046119428/xtyyRarT_400x400.jpg">
+                    </q-avatar>
+                    <q-menu fit>
+                        <q-list>
+                            <q-item>
+                                <q-item-section top avatar>
+                                    <q-avatar color="primary" text-color="white">
+                                        <img src="https://pbs.twimg.com/profile_images/1642568071046119428/xtyyRarT_400x400.jpg">
+                                    </q-avatar>
+                                </q-item-section>
+                                <q-item-section>
+                                    <q-item-label>John Doe</q-item-label>
+                                    <q-item-label caption lines="1">johndoe@email.com</q-item-label>
+                                </q-item-section>
+                            </q-item>
+                            <q-separator />
+                            <q-item clickable>
+                                <q-item-section avatar>
+                                    <q-icon name="date_range" />
+                                </q-item-section>
+                                <q-item-section>Reservations</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                                <q-item-section avatar>
+                                    <q-icon name="confirmation_number" />
+                                </q-item-section>
+                                <q-item-section>Tickets</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                                <q-item-section avatar>
+                                    <q-icon name="receipt_long" />
+                                </q-item-section>
+                                <q-item-section>Orders</q-item-section>
+                            </q-item>
+                            <q-separator />
+                            <q-item clickable>
+                                <q-item-section avatar>
+                                    <q-icon name="manage_accounts" />
+                                </q-item-section>
+                                <q-item-section>Settings</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                                <q-item-section avatar>
+                                    <q-icon name="logout" />
+                                </q-item-section>
+                                <q-item-section>Logout</q-item-section>
+                            </q-item>
+                        </q-list>
+                    </q-menu>
+                </q-btn>
+            </q-toolbar>
+        </q-header>
+
+        <q-drawer v-model="rightDrawerOpen" side="right" bordered overlay>
+            <!-- drawer content -->
+            should be the cart
+        </q-drawer>
+
+        <q-page-container class="q-ma-xl">
+            <router-view />
+        </q-page-container>
+        <Footer/>
     </q-layout>
-  </template>
+</template>
   
-  <script>
-  import { defineComponent, ref } from 'vue'
-  import EssentialLink from '../components/EssentialLink.vue'
-  
-  const linksList = [
-    {
-      title: 'Docs',
-      caption: 'quasar.dev',
-      icon: 'school',
-      link: 'https://quasar.dev'
-    },
-    {
-      title: 'Github',
-      caption: 'github.com/quasarframework',
-      icon: 'code',
-      link: 'https://github.com/quasarframework'
-    },
-    {
-      title: 'Discord Chat Channel',
-      caption: 'chat.quasar.dev',
-      icon: 'chat',
-      link: 'https://chat.quasar.dev'
-    },
-    {
-      title: 'Forum',
-      caption: 'forum.quasar.dev',
-      icon: 'record_voice_over',
-      link: 'https://forum.quasar.dev'
-    },
-    {
-      title: 'Twitter',
-      caption: '@quasarframework',
-      icon: 'rss_feed',
-      link: 'https://twitter.quasar.dev'
-    },
-    {
-      title: 'Facebook',
-      caption: '@QuasarFramework',
-      icon: 'public',
-      link: 'https://facebook.quasar.dev'
-    },
-    {
-      title: 'Quasar Awesome',
-      caption: 'Community Quasar projects',
-      icon: 'favorite',
-      link: 'https://awesome.quasar.dev'
-    },
-    {
-      title: 'Login',
-      caption: 'quasar.dev',
-      icon: 'school',
-      link: '/auth/login'
-    },
-  ]
-  
-  export default defineComponent({
-    name: 'MainLayout',
-  
-    components: {
-      EssentialLink
-    },
-  
-    setup () {
-      const leftDrawerOpen = ref(false)
-  
-      return {
-        essentialLinks: linksList,
-        leftDrawerOpen,
-        toggleLeftDrawer () {
-          leftDrawerOpen.value = !leftDrawerOpen.value
-        }
-      }
-    }
-  })
-  </script>
+
   

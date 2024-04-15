@@ -35,11 +35,11 @@
                     label="Password"
                 >
                     <template v-slot:append>
-                    <q-icon
-                        :name="showPassword ? 'visibility_off' : 'visibility'"
-                        class="cursor-pointer"
-                        @click="showPassword = !showPassword"
-                    />
+                        <q-icon
+                            :name="showPassword ? 'visibility_off' : 'visibility'"
+                            class="cursor-pointer"
+                            @click="showPassword = !showPassword"
+                        />
                     </template>
                 </q-input>
                 <p class="text-right q-mt-md">
