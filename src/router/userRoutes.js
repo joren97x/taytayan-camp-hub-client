@@ -10,7 +10,23 @@ const userRoutes = [
             },
             { 
                 path: 'about', 
+                name: 'About',
                 component: () => import('pages/User/About.vue')
+            },
+            { 
+                path: 'milktea-menu', 
+                name: 'Milktea Menu',
+                component: () => import('pages/User/Milkteas/Index.vue')
+            },
+            { 
+                path: 'events', 
+                name: 'Events',
+                component: () => import('pages/User/Events/Index.vue')
+            },
+            { 
+                path: 'campsites', 
+                name: 'Campsites',
+                component: () => import('pages/User/Campsites/Index.vue')
             },
         ]
     },

@@ -19,9 +19,9 @@
                 Taytayan Camp Hub
                 </q-toolbar-title>
                 <q-space />
-                <q-btn flat no-caps class="bordered" bordered>Milktea Menu</q-btn>
-                <q-btn flat no-caps>Explore Events</q-btn>
-                <q-btn flat no-caps>Book Campsite</q-btn>
+                <q-btn flat no-caps to="/milktea-menu">Milktea Menu</q-btn>
+                <q-btn flat no-caps to="/events">Explore Events</q-btn>
+                <q-btn flat no-caps to="/campsites">Book Campsite</q-btn>
                 <q-space />
                 <q-btn flat no-caps to="/auth/register">Register</q-btn>
                 <q-btn no-caps color="secondary" unelevated to="/auth/login">Login</q-btn>
