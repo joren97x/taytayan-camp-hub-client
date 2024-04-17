@@ -28,9 +28,13 @@ const userRoutes = [
                 name: 'Campsites',
                 component: () => import('pages/User/Campsites/Index.vue')
             },
-        ]
+        ],
     },
-
+    {
+        path: '/food-checkout',
+        name: 'Food Checkout',
+        component: () => import('pages/User/Milkteas/Checkout.vue')
+    },
   // Always leave this as last one,
   // but you can also remove it
     {

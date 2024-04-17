@@ -97,7 +97,8 @@
                         <span style="margin: 0;">2</span>
                         <q-btn round icon="add" />
                     </q-btn-group>
-                    <q-btn class="full-width q-my-lg" no-caps color="blue">Add to cart</q-btn>
+                    <q-btn class="full-width q-mt-lg" no-caps color="blue">Update</q-btn>
+                    <q-btn class="full-width q-mb-lg q-mt-md" outline no-caps color="red">Remove from cart</q-btn>
                 </div>
             </div>
         </q-card>

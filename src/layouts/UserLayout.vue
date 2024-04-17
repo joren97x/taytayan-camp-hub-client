@@ -2,8 +2,10 @@
 
     import { ref } from 'vue'
     import Footer from 'src/components/User/Footer.vue'
+    import FoodCartItem from 'src/components/User/FoodCartItem.vue'
 
     const rightDrawerOpen = ref(false)
+    const dialog = ref(false)
 
 </script>
 
@@ -127,23 +129,11 @@
                 </q-item-section>
             </q-item>
             <q-list>
-                <q-item v-for="n in 3" :key="n">
-                    <q-item-section>
-                        Milktea
-                        <q-item-label caption>Secondary line text. Lorem ipsum dolor sit amet
-                            , consectetur adipiscit elit.</q-item-label>
-                    </q-item-section>
-                    
-                    <q-item-section thumbnail>
-                        <img src="https://cdn.quasar.dev/img/chicken-salad.jpg"/>
-                        <q-item-section side top class="q-mt-sm">
-                            <q-item-label>P30.00</q-item-label>
-                        </q-item-section>
-                    </q-item-section>
-                </q-item>
+                <FoodCartItem v-for="n in 3" :key="n" />
             </q-list>
             <div class="q-pa-sm full-width" style="position: absolute; bottom: 0;">
                 <q-btn 
+                    to="/food-checkout"
                     class="full-width"
                     color="blue" 
                     label="Checkout" 
