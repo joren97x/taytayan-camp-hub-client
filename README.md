@@ -14,11 +14,7 @@ npm install
 quasar dev
 ```
 
-
-### Build the app for production
+### Database schema
 ```bash
-quasar build
+https://dbdiagram.io/d/661fa65f03593b6b613897fa
 ```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
