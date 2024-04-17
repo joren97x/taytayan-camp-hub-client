@@ -124,12 +124,3 @@
         </div>
     </div>
 </template>
-
-<style scoped>
-
-    .sidebar {
-        position: sticky;
-        top: 0;
-    }
-
-</style>

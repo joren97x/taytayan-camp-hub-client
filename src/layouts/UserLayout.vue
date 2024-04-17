@@ -100,7 +100,56 @@
 
         <q-drawer v-model="rightDrawerOpen" side="right" bordered overlay>
             <!-- drawer content -->
-            should be the cart
+            <q-item>
+                <q-item-section class="text-h6">RJC Cafe</q-item-section>
+                <q-item-section side>
+                    <div class="text-grey-8 q-gutter-xs">
+                        <q-btn icon="delete" color="red" round flat no-caps>
+                            <q-tooltip>
+                                Clear cart
+                            </q-tooltip>
+                        </q-btn>
+                        <q-btn class="gt-xs" flat round icon="close">
+                            <q-tooltip>
+                                Close cart
+                            </q-tooltip>
+                        </q-btn>
+                    </div>
+                </q-item-section>
+            </q-item>
+            <q-separator/>
+            <q-item>
+                <q-item-section>
+                    2 items
+                </q-item-section>
+                <q-item-section side>
+                    Subtotal: P65.00
+                </q-item-section>
+            </q-item>
+            <q-list>
+                <q-item v-for="n in 3" :key="n">
+                    <q-item-section>
+                        Milktea
+                        <q-item-label caption>Secondary line text. Lorem ipsum dolor sit amet
+                            , consectetur adipiscit elit.</q-item-label>
+                    </q-item-section>
+                    
+                    <q-item-section thumbnail>
+                        <img src="https://cdn.quasar.dev/img/chicken-salad.jpg"/>
+                        <q-item-section side top class="q-mt-sm">
+                            <q-item-label>P30.00</q-item-label>
+                        </q-item-section>
+                    </q-item-section>
+                </q-item>
+            </q-list>
+            <div class="q-pa-sm full-width" style="position: absolute; bottom: 0;">
+                <q-btn 
+                    class="full-width"
+                    color="blue" 
+                    label="Checkout" 
+                    no-caps
+                />
+            </div>
         </q-drawer>
 
         <q-page-container class="q-ma-xl">

@@ -1,6 +1,7 @@
 <script setup>
 
     import { ref } from 'vue'
+    import FoodDescriptionDialog from './FoodDescriptionDialog.vue'
     defineProps({ product: Object })
 
     const dialog = ref(false)
@@ -14,11 +15,12 @@
 
         <q-card-section>
             <q-btn
-                fab
+                round
                 color="primary"
                 icon="add"
                 class="absolute"
-                @click="dialog = true"
+                @click="dialog = !dialog"
+                size="md"
                 style="top: 0; right: 12px; transform: translateY(-50%);"
             />
 
@@ -33,38 +35,6 @@
         </q-card-section>
     </q-card>
 
-    <q-dialog v-model="dialog" full-width>
-        <q-card class="my-card q-px-md">
-            <q-item>
-                <q-item-section class="text-h6">
-                    Food description
-                </q-item-section>
-                <q-item-section side>
-                    <q-btn round icon="close" flat @click="dialog = false"></q-btn>
-                </q-item-section>
-            </q-item>
-            <div class="row q-col-gutter-md">
-                <div class="col-5">
-                    <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
-                </div>
-                <div class="col-7">
-                    <p>
-                        <span class="text-h5">
-                            Cafe Basilico
-                        </span>
-                        <br>
-                        <span class="text-h6 text-weight-light">
-                            P65.00
-                        </span>
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam, totam?
-                    </p>
-                    
-                </div>
-            </div>
-            
-        </q-card>
-    </q-dialog>
+    <FoodDescriptionDialog :dialog="dialog" @close="dialog = false" />
 
 </template>
