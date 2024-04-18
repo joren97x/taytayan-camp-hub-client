@@ -10,7 +10,10 @@
 <template>
     <q-item @click="dialog = true" clickable>
         <q-item-section>
+            <span>
+                <q-chip size="sm" :class="$q.dark.isActive ? 'bg-grey-9' : ''">1</q-chip>
             Milktea
+        </span>
             <q-item-label caption>Secondary line text. Lorem ipsum dolor sit amet
                 , consectetur adipiscit elit.</q-item-label>
         </q-item-section>

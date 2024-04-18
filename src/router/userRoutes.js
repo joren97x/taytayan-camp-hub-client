@@ -18,6 +18,11 @@ const userRoutes = [
                 name: 'Milktea Menu',
                 component: () => import('pages/User/Milkteas/Index.vue')
             },
+            {
+                path: '/orders',
+                name: 'Orders',
+                component: () => import('pages/User/Milkteas/Orders.vue')
+            },
             { 
                 path: 'events', 
                 name: 'Events',
@@ -35,6 +40,7 @@ const userRoutes = [
         name: 'Food Checkout',
         component: () => import('pages/User/Milkteas/Checkout.vue')
     },
+    
   // Always leave this as last one,
   // but you can also remove it
     {

@@ -10,7 +10,7 @@
 </script>
 
 <template>
-    <q-layout view="hHh lpR lff">
+    <q-layout view="hHh lpR lfr">
 
         <q-header>
             <q-toolbar class="q-pa-md">
@@ -75,7 +75,7 @@
                                 </q-item-section>
                                 <q-item-section>Tickets</q-item-section>
                             </q-item>
-                            <q-item clickable>
+                            <q-item clickable to="/orders">
                                 <q-item-section avatar>
                                     <q-icon name="receipt_long" />
                                 </q-item-section>

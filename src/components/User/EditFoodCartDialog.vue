@@ -30,7 +30,7 @@
                         </span>
                         <br>
                         <span class="text-h6 text-weight-light">
-                            P65.00
+                            P30.00
                         </span>
                     </p>
                     <p>

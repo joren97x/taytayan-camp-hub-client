@@ -10,7 +10,7 @@
 
 <template>
     <q-dialog full-width v-model="show">
-        <q-card class="my-card q-px-md">
+        <q-card class="q-px-md">
             <q-item>
                 <q-item-section class="text-h6">
                     Food description
@@ -30,7 +30,7 @@
                         </span>
                         <br>
                         <span class="text-h6 text-weight-light">
-                            P65.00
+                            P30.00
                         </span>
                     </p>
                     <p>
