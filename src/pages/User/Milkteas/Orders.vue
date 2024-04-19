@@ -52,7 +52,8 @@
                         </q-item>
                         <q-list>
                             <div v-if="tab == 'On Progress'">
-                                <PendingOrderItem v-for="n in 3" :key="n" :status="'Pending'" />
+                                <PendingOrderItem :status="'Pending'" :mode="'Delivery'" />
+                                <PendingOrderItem :status="'Pending'" :mode="'Pickup'" />
                             </div>
                             <div v-if="tab == 'Completed'">
                                 <CompletedOrderItem v-for="n in 3" :key="n" :status="'Completed'" />

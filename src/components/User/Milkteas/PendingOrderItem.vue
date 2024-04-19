@@ -3,7 +3,7 @@
     import OrderItem from './OrderItem.vue'
     import { ref } from 'vue'
 
-    defineProps({ status: String })
+    defineProps({ status: String, mode: String })
 
     const step = ref(1)
     const dialog = ref(false)
@@ -71,7 +71,7 @@
 
                     <q-step
                         :name="3"
-                        title="Out for delivery"
+                        :title="mode == 'Delivery' ? 'Out for delivery' : 'Ready for pick up'"
                         caption="caption"
                         icon="directions_bike"
                     />
@@ -89,7 +89,7 @@
                             <q-item-section>
                                 <q-item-label class="text-h6">
                                     3 items
-                                    <q-chip :class="$q.dark.isActive ? 'bg-grey-9' : ''">Delivery</q-chip>
+                                    <q-chip :class="$q.dark.isActive ? 'bg-grey-9' : ''">{{ mode }}</q-chip>
                                 </q-item-label>
                             </q-item-section>
                         </q-item>
@@ -136,6 +136,7 @@
                                 P95.00
                             </q-item-section>
                         </q-item>
+                        <q-btn class="full-width q-mt-md" no-caps color="secondary">Cancel Order (or waitt idk)</q-btn>
                     </div>
                 </div>
             </q-card-section>

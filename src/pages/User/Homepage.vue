@@ -1,7 +1,6 @@
 <script setup>
 
     import { ref } from 'vue'
-    import SectionCard from 'src/components/User/SectionCard.vue'
 
     const slide = ref('style1')
 

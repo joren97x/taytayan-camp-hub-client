@@ -39,6 +39,7 @@
 
 <template>
     <div>
+        todo:
         <q-img
             cover
             src="masarap milktea.jpeg"

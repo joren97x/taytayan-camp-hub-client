@@ -5,6 +5,7 @@
     import FoodCartItem from 'src/components/User/Milkteas/FoodCartItem.vue'
 
     const rightDrawerOpen = ref(false)
+    const clearCartDialog = ref(false)
 
 </script>
 
@@ -105,12 +106,12 @@
                 <q-item-section class="text-h6">RJC Cafe</q-item-section>
                 <q-item-section side>
                     <div class="text-grey-8 q-gutter-xs">
-                        <q-btn icon="delete" color="red" round flat no-caps>
+                        <q-btn icon="delete" color="red" round flat no-caps @click="clearCartDialog = true">
                             <q-tooltip>
                                 Clear cart
                             </q-tooltip>
                         </q-btn>
-                        <q-btn class="gt-xs" flat round icon="close">
+                        <q-btn class="gt-xs" flat round icon="close" @click="rightDrawerOpen = false">
                             <q-tooltip>
                                 Close cart
                             </q-tooltip>
@@ -140,6 +141,19 @@
                 />
             </div>
         </q-drawer>
+
+        <q-dialog v-model="clearCartDialog">
+            <q-card class="full-width">
+                <q-card-section>
+                    <div class="text-h6">Clear Cart</div>
+                    Are you sure you want to clear your cart?
+                </q-card-section>
+                <q-card-actions align="right">
+                    <q-btn outline v-close-popup no-caps color="primary">Cancel</q-btn>
+                    <q-btn unelevated no-caps color="negative">Clear</q-btn>
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
 
         <q-page-container class="q-ma-xl">
             <router-view />
