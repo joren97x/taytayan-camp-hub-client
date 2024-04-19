@@ -1,37 +1,20 @@
 <script setup>
 
+    import OrderItem from './OrderItem.vue'
     import { ref } from 'vue'
-
+    defineProps({ status: String })
     const dialog = ref(false)
-
 
 </script>
 
 <template>
-    <q-item class="q-my-sm">
-        <q-item-section thumbnail> 
-            <img src="https://cdn.quasar.dev/img/chicken-salad.jpg"/>
-        </q-item-section>
-        <q-item-section>
-            <q-item-label>
-                Food name
-            </q-item-label>
-            <q-item-label caption>
-                3 items - P95.00
-            </q-item-label>
-            <q-item-label caption>
-                Completed - Order ABC123
-            </q-item-label>
-        </q-item-section>
-        <q-item-section side top>
-            <q-item-label>Apr 18, 2024</q-item-label>
-            <div class="text-grey-8 q-gutter-xs">
-                <q-btn class="gt-xs" unelevated outline color="primary" no-caps @click="dialog = true">View Order</q-btn>
-                <q-btn class="gt-xs" unelevated color="primary" no-caps>Reorder</q-btn>
-            </div>
-        </q-item-section>
-    </q-item>
-
+    <OrderItem :status="status">
+        <q-item-label>Apr 18, 2024</q-item-label>
+        <div class="text-grey-8 q-gutter-xs">
+            <q-btn class="gt-xs" unelevated outline color="primary" no-caps @click="dialog = true">View Order</q-btn>
+            <q-btn class="gt-xs" unelevated color="primary" no-caps to="/food-checkout">Reorder</q-btn>
+        </div>
+    </OrderItem>
     <q-dialog v-model="dialog" full-width>
         <q-card>
             <q-card-section>
@@ -102,5 +85,4 @@
             </q-card-section>
         </q-card>
     </q-dialog>
-
 </template>

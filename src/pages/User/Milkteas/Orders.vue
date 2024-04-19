@@ -1,7 +1,9 @@
 <script setup>
 
     import { ref } from 'vue'
-    import OrderItem from 'src/components/User/OrderItem.vue'
+    import CompletedOrderItem from 'src/components/User/Milkteas/CompletedOrderItem.vue'
+    import PendingOrderItem from 'src/components/User/Milkteas/PendingOrderItem.vue'
+    import CancelledOrderItem from 'src/components/User/Milkteas/CancelledOrderItem.vue'
 
     const tab = ref('On Progress')
 
@@ -49,7 +51,15 @@
                             <q-item-section class="text-h6">{{ tab }}</q-item-section>
                         </q-item>
                         <q-list>
-                            <OrderItem v-for="n in 3" :key="n" />
+                            <div v-if="tab == 'On Progress'">
+                                <PendingOrderItem v-for="n in 3" :key="n" :status="'Pending'" />
+                            </div>
+                            <div v-if="tab == 'Completed'">
+                                <CompletedOrderItem v-for="n in 3" :key="n" :status="'Completed'" />
+                            </div>
+                            <div v-if="tab == 'Cancelled'">
+                                <CancelledOrderItem v-for="n in 3" :key="n" :status="'Cancelled'" />
+                            </div>
                         </q-list>
                     </q-card-section>
                 </q-card>

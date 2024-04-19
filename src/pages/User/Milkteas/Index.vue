@@ -1,8 +1,8 @@
 <script setup>
 
     import { ref, onMounted } from 'vue'
-    import ProductCard from 'src/components/User/ProductCard.vue'
-    import FeaturedProductCard from 'src/components/User/FeaturedProductCard.vue'
+    import ProductCard from 'src/components/User/Milkteas/ProductCard.vue'
+    import FeaturedProductCard from 'src/components/User/Milkteas/FeaturedProductCard.vue'
 
     const slide = ref(1)
     const categories = [

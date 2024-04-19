@@ -1,7 +1,7 @@
 <script setup>
 
     import { ref } from 'vue'
-    import FoodCartItem from 'src/components/User/FoodCartItem.vue'
+    import FoodCartItem from 'src/components/User/Milkteas/FoodCartItem.vue'
 
     const mode = ref('Delivery')
     const payment_method = ref('GCash')

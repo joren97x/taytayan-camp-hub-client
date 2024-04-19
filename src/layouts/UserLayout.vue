@@ -2,10 +2,9 @@
 
     import { ref } from 'vue'
     import Footer from 'src/components/User/Footer.vue'
-    import FoodCartItem from 'src/components/User/FoodCartItem.vue'
+    import FoodCartItem from 'src/components/User/Milkteas/FoodCartItem.vue'
 
     const rightDrawerOpen = ref(false)
-    const dialog = ref(false)
 
 </script>
 
