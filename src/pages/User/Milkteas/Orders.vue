@@ -1,11 +1,22 @@
 <script setup>
 
-    import { ref } from 'vue'
+    import { ref, onMounted } from 'vue'
+    import { api } from 'src/boot/axios'
     import CompletedOrderItem from 'src/components/User/Milkteas/CompletedOrderItem.vue'
     import PendingOrderItem from 'src/components/User/Milkteas/PendingOrderItem.vue'
     import CancelledOrderItem from 'src/components/User/Milkteas/CancelledOrderItem.vue'
 
     const tab = ref('On Progress')
+
+    onMounted(() => {
+        api.get('/user')
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    })
 
 </script>
 

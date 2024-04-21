@@ -5,22 +5,14 @@
     import { api } from 'src/boot/axios'
 
     const $q = useQuasar()
-    const email = ref('')
-
-    async function getToken() {
-        await api.get('../sanctum/csrf-cookie')
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((err) => {
-            console.error(err)
-        })
-    }
+    const form = ref({
+        password: '',
+        password_confirmation: ''
+    })
 
     function onSubmit() {
-        getToken()
         $q.notify('go make a request')
-        api.post('/forgot-password', { email: email.value })
+        api.post('/reset-password', form.value)
         .then((res) => {
             console.log(res)
         })
@@ -39,15 +31,21 @@
                 Go back to login
             </q-btn>
             <q-card-section>
-                <div class="text-h6 q-mb-lg">Forgot Password</div>
+                <div class="text-h6 q-mb-lg">Password Reset</div>
                 <p>Enter your email address and we will send you a reset password link.</p>
                 <p class="text-positive">We have emailed your password reset link.</p>
                 <q-input
                     filled
-                    v-model="email"
-                    label="Email Address"
+                    v-model="form.password"
+                    label="New Password"
                     lazy-rules
-                    type="email"
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
+                />
+                <q-input
+                    filled
+                    v-model="form.password_confirmation"
+                    label="Confirm Password"
+                    lazy-rules
                     :rules="[ val => val && val.length > 0 || 'Please type something']"
                 />
                 <q-btn label="Reset" no-caps type="submit" class="full-width" color="primary"/>

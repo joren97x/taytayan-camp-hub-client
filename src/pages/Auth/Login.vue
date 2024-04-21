@@ -1,15 +1,35 @@
 <script setup>
 
     import { ref } from 'vue'
-    import {useQuasar} from 'quasar'
+    import { useQuasar } from 'quasar'
+    import { api } from 'src/boot/axios'
 
     const $q = useQuasar()
-    const email = ref('')
-    const password = ref('')
     const showPassword = ref(false)
+    const form = ref({
+        email: '',
+        password: ''
+    })
+
+    async function getToken() {
+        await api.get('/sanctum/csrf-cookie')
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    }
 
     function onSubmit() {
-        $q.notify('go make a request')
+        getToken()
+        api.post('/login', form.value)
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
 </script>
@@ -22,14 +42,14 @@
                 <div class="text-h6 q-mb-lg">Login to Taytayan Camp Hub</div>
                 <q-input
                     filled
-                    v-model="email"
+                    v-model="form.email"
                     label="Email Address"
                     lazy-rules
                     type="email"
                     :rules="[ val => val && val.length > 0 || 'Please type something']"
                 />
                 <q-input 
-                    v-model="password" 
+                    v-model="form.password" 
                     filled 
                     :type="!showPassword ? 'password' : 'text'" 
                     label="Password"
@@ -44,7 +64,7 @@
                 </q-input>
                 <p class="text-right q-mt-md">
                     <router-link 
-                        to="/auth/forgot-password" 
+                        to="/forgot-password" 
                         class="text-primary" 
                         style="text-decoration: none"
                     >
@@ -59,7 +79,7 @@
                 <p class="text-center">
                     Don't have an account? 
                     <router-link 
-                        to="/auth/register"  
+                        to="/register"  
                         class="text-primary" 
                         style="text-decoration: none"
                     >

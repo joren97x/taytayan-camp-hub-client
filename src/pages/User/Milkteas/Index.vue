@@ -31,7 +31,6 @@
     })
 
     function scrollToSection(section) {
-        console.log(section)
         document.getElementById(section).scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
 
@@ -39,7 +38,6 @@
 
 <template>
     <div>
-        todo:
         <q-img
             cover
             src="masarap milktea.jpeg"

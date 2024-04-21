@@ -2,14 +2,27 @@
 
     import { ref } from 'vue'
     import {useQuasar} from 'quasar'
+    import { api } from 'src/boot/axios'
 
     const $q = useQuasar()
-    const email = ref('')
-    const password = ref('')
     const showPassword = ref(false)
+    const form = ref({
+        email: '',
+        name: '',
+        lastName: '',
+        password: '',
+        password_confirmation: ''
+    })
 
     function onSubmit() {
         $q.notify('go make a request')
+        api.post('/register', form.value)
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
 </script>
@@ -22,8 +35,8 @@
                 <div class="text-h6 q-mb-lg">Create your account</div>
                 <q-input
                     filled
-                    v-model="email"
-                    label="Email address"
+                    v-model="form.email"
+                    label="Email Address"
                     lazy-rules
                     type="email"
                     :rules="[ val => val && val.length > 0 || 'Please type something']"
@@ -33,8 +46,8 @@
                     <div class="col-6">
                         <q-input
                             filled
-                            v-model="email"
-                            label="First name"
+                            v-model="form.name"
+                            label="First Name"
                             lazy-rules
                             :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
@@ -42,28 +55,44 @@
                     <div class="col-6">
                         <q-input
                             filled
-                            v-model="email"
-                            label="Last name"
+                            v-model="form.lastName"
+                            label="Last Name"
                             lazy-rules
                             :rules="[ val => val && val.length > 0 || 'Please type something']"
                         />
                     </div>
                 </div>
 
-                <q-input
+                <!-- <q-input
                     filled
-                    v-model="email"
+                    v-model="form.password"
                     label="Phone number"
                     lazy-rules
                     hint="e.g. +63917XXXXXX"
                     :rules="[ val => val && val.length > 0 || 'Please type something']"
-                />
+                /> -->
 
                 <q-input 
-                    v-model="password" 
+                    v-model="form.password" 
                     filled 
                     :type="!showPassword ? 'password' : 'text'" 
                     label="Password"
+                    class="q-mb-md"
+                >
+                    <template v-slot:append>
+                    <q-icon
+                        :name="showPassword ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="showPassword = !showPassword"
+                    />
+                    </template>
+                </q-input>
+
+                <q-input 
+                    v-model="form.password_confirmation" 
+                    filled 
+                    :type="!showPassword ? 'password' : 'text'" 
+                    label="Confirm Password"
                 >
                     <template v-slot:append>
                     <q-icon
@@ -81,7 +110,7 @@
                 <p class="text-center">
                     Already have an account? 
                     <router-link 
-                        to="/auth/login"  
+                        to="/login"  
                         class="text-primary" 
                         style="text-decoration: none"
                     >

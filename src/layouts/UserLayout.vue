@@ -1,11 +1,22 @@
 <script setup>
 
     import { ref } from 'vue'
+    import { api } from 'src/boot/axios'
     import Footer from 'src/components/User/Footer.vue'
     import FoodCartItem from 'src/components/User/Milkteas/FoodCartItem.vue'
 
     const rightDrawerOpen = ref(false)
     const clearCartDialog = ref(false)
+
+    function logout() {
+        api.post('/logout')
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    }
 
 </script>
 
@@ -25,8 +36,8 @@
                 <q-btn flat no-caps to="/events">Explore Events</q-btn>
                 <q-btn flat no-caps to="/campsites">Book Campsite</q-btn>
                 <q-space />
-                <q-btn flat no-caps to="/auth/register">Register</q-btn>
-                <q-btn no-caps color="secondary" unelevated to="/auth/login">Login</q-btn>
+                <q-btn flat no-caps to="/register">Register</q-btn>
+                <q-btn no-caps color="secondary" unelevated to="/login">Login</q-btn>
                 <q-btn flat icon="search" round></q-btn>
                 <q-btn flat icon="notifications" round>
                     <q-badge color="red" floating>4</q-badge>
@@ -88,7 +99,7 @@
                                 </q-item-section>
                                 <q-item-section>Settings</q-item-section>
                             </q-item>
-                            <q-item clickable>
+                            <q-item clickable @click="logout()">
                                 <q-item-section avatar>
                                     <q-icon name="logout" />
                                 </q-item-section>

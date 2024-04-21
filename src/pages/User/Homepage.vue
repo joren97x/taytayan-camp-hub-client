@@ -1,8 +1,19 @@
 <script setup>
 
-    import { ref } from 'vue'
+    import { ref, onMounted } from 'vue'
+    import { api } from 'src/boot/axios'
 
     const slide = ref('style1')
+
+    onMounted(() => {
+        api.get('hello')
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    })
 
 </script>
 
