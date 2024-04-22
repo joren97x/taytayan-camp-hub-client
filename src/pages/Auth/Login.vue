@@ -1,35 +1,31 @@
 <script setup>
 
     import { ref } from 'vue'
-    import { useQuasar } from 'quasar'
-    import { api } from 'src/boot/axios'
+    import { useAuthStore } from 'src/stores/auth-store'
+    import { useRouter } from 'vue-router'
 
-    const $q = useQuasar()
+    const router = useRouter()
+    const authStore = useAuthStore()
     const showPassword = ref(false)
+    const loginBtn = ref(false)
     const form = ref({
         email: '',
         password: ''
     })
 
-    async function getToken() {
-        await api.get('/sanctum/csrf-cookie')
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((err) => {
-            console.error(err)
-        })
-    }
-
-    function onSubmit() {
-        getToken()
-        api.post('/login', form.value)
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    async function onSubmit() {
+        try {
+            loginBtn.value = true
+            const response = await authStore.handleLogin(form.value)
+            if(response.status === 204) {
+                await authStore.fetchUser()
+                router.push('/')
+            }
+            loginBtn.value = false
+        } catch (error) {
+            loginBtn.value = false
+            console.error(error)
+        }
     }
 
 </script>
@@ -37,7 +33,7 @@
 <template>
     <q-form @submit="onSubmit()">
         <q-card class="q-pa-xl" flat>
-
+            {{ authStore.authErrors }}
             <q-card-section>
                 <div class="text-h6 q-mb-lg">Login to Taytayan Camp Hub</div>
                 <q-input
@@ -45,7 +41,8 @@
                     v-model="form.email"
                     label="Email Address"
                     lazy-rules
-                    type="email"
+                    :error="authStore.authErrors?.email ? true : false"
+                    :error-message="authStore.authErrors?.email ? authStore.authErrors.email[0] : ''"
                     :rules="[ val => val && val.length > 0 || 'Please type something']"
                 />
                 <q-input 
@@ -53,6 +50,8 @@
                     filled 
                     :type="!showPassword ? 'password' : 'text'" 
                     label="Password"
+                    :error="authStore.authErrors?.password ? true : false"
+                    :error-message="authStore.authErrors?.password ? authStore.authErrors.password[0] : ''"
                 >
                     <template v-slot:append>
                         <q-icon
@@ -72,7 +71,7 @@
                     </router-link>
                 </p>
 
-                <q-btn label="Log in" no-caps type="submit" class="full-width" color="primary"/>
+                <q-btn label="Log in" :loading="loginBtn" no-caps type="submit" class="full-width" color="primary"/>
             </q-card-section>
 
             <q-card-section>

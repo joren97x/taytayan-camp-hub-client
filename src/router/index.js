@@ -14,7 +14,6 @@ const routes = [...userRoutes, ...authRoutes, ...adminRoutes]
  * async/await or return a Promise which resolves
  * with the Router instance.
  */
-console.log(routes)
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory

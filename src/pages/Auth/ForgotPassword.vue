@@ -1,32 +1,21 @@
 <script setup>
 
     import { ref } from 'vue'
-    import {useQuasar} from 'quasar'
-    import { api } from 'src/boot/axios'
+    import { useAuthStore } from 'src/stores/auth-store'
 
-    const $q = useQuasar()
+    const authStore = useAuthStore()
     const email = ref('')
+    const forgotPasswordBtn = ref(false)
 
-    async function getToken() {
-        await api.get('../sanctum/csrf-cookie')
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((err) => {
-            console.error(err)
-        })
-    }
-
-    function onSubmit() {
-        getToken()
-        $q.notify('go make a request')
-        api.post('/forgot-password', { email: email.value })
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((err) => {
-            console.error(err)
-        })
+    async function onSubmit() {
+        try {
+            forgotPasswordBtn.value = true
+            const response = await authStore.handleForgotPassword(email.value)
+            forgotPasswordBtn.value = false
+        } catch (error) {
+            forgotPasswordBtn.value = false
+            console.error(error)
+        }
     }
 
 </script>
@@ -41,16 +30,19 @@
             <q-card-section>
                 <div class="text-h6 q-mb-lg">Forgot Password</div>
                 <p>Enter your email address and we will send you a reset password link.</p>
-                <p class="text-positive">We have emailed your password reset link.</p>
+                <q-banner inline-actions class="text-white bg-positive q-mb-md" v-if="authStore.authStatus?.status ? true : false">
+                    {{ authStore.authStatus.status }}
+                </q-banner>
                 <q-input
                     filled
                     v-model="email"
                     label="Email Address"
                     lazy-rules
-                    type="email"
+                    :error="authStore.authErrors?.email ? true : false"
+                    :error-message="authStore.authErrors?.email ? authStore.authErrors.email[0] : ''"
                     :rules="[ val => val && val.length > 0 || 'Please type something']"
                 />
-                <q-btn label="Reset" no-caps type="submit" class="full-width" color="primary"/>
+                <q-btn label="Reset" :loading="forgotPasswordBtn" no-caps type="submit" class="full-width" color="primary"/>
             </q-card-section>
 
         </q-card>

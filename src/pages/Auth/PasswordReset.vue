@@ -1,24 +1,30 @@
 <script setup>
 
     import { ref } from 'vue'
-    import {useQuasar} from 'quasar'
-    import { api } from 'src/boot/axios'
+    import { useRoute } from 'vue-router'
+    import { useAuthStore } from 'src/stores/auth-store'
 
-    const $q = useQuasar()
+    const showPassword = ref(false)
+    const showPassword2 = ref(false)
+    const resetBtn = ref(false)
+    const authStore = useAuthStore()
+    const route = useRoute()
     const form = ref({
+        token: route.params.token,
+        email: route.query.email,
         password: '',
         password_confirmation: ''
     })
 
-    function onSubmit() {
-        $q.notify('go make a request')
-        api.post('/reset-password', form.value)
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((err) => {
-            console.error(err)
-        })
+    async function onSubmit() {
+        try {
+            resetBtn.value = true
+            const response = await authStore.handleResetPassword(form.value)
+            resetBtn.value = false
+        } catch (error) {
+            resetBtn.value = false
+            console.error(error)
+        }
     }
 
 </script>
@@ -32,23 +38,44 @@
             </q-btn>
             <q-card-section>
                 <div class="text-h6 q-mb-lg">Password Reset</div>
-                <p>Enter your email address and we will send you a reset password link.</p>
-                <p class="text-positive">We have emailed your password reset link.</p>
+                <q-banner inline-actions class="text-white bg-negative q-mb-md" v-if="authStore.authErrors?.email ? true : false">
+                    {{ authStore.authErrors?.email ? authStore.authErrors.email[0] : '' }}
+                </q-banner>
                 <q-input
                     filled
                     v-model="form.password"
                     label="New Password"
+                    :type="!showPassword ? 'password' : 'text'" 
                     lazy-rules
+                    :error="authStore.authErrors?.password ? true : false"
+                    :error-message="authStore.authErrors?.password ? authStore.authErrors.password[0] : ''"
                     :rules="[ val => val && val.length > 0 || 'Please type something']"
-                />
+                >
+                    <template v-slot:append>
+                        <q-icon
+                            :name="showPassword ? 'visibility_off' : 'visibility'"
+                            class="cursor-pointer"
+                            @click="showPassword = !showPassword"
+                        />
+                    </template>
+                </q-input>
                 <q-input
                     filled
                     v-model="form.password_confirmation"
                     label="Confirm Password"
                     lazy-rules
+                    :type="!showPassword2 ? 'password' : 'text'" 
                     :rules="[ val => val && val.length > 0 || 'Please type something']"
-                />
-                <q-btn label="Reset" no-caps type="submit" class="full-width" color="primary"/>
+                >
+                    <template v-slot:append>
+                        <q-icon
+                            :name="showPassword2 ? 'visibility_off' : 'visibility'"
+                            class="cursor-pointer"
+                            @click="showPassword2 = !showPassword2"
+                        />
+                    </template>
+                </q-input>
+                <q-btn label="Reset" :loading="resetBtn" no-caps type="submit" class="full-width" color="primary"/>
             </q-card-section>
 
         </q-card>
