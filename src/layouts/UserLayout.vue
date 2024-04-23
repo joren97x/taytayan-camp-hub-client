@@ -18,6 +18,9 @@
                 router.push('/login')
             }
         } catch (error) {
+            authStore.authUser = null
+            localStorage.removeItem('auth')
+            console.error(error)
             alert('Something went wrong bruh...')
         }
     }
@@ -39,13 +42,12 @@
                 <q-btn flat no-caps to="/milktea-menu">Milktea Menu</q-btn>
                 <q-btn flat no-caps to="/events">Explore Events</q-btn>
                 <q-btn flat no-caps to="/campsites">Book Campsite</q-btn>
-                {{ authStore.isAuthenticated }}
                 <q-space />
-                <!-- <div v-if="!authStore.isAuthenticated"> -->
+                <div v-if="!authStore.isAuthenticated">
                     <q-btn flat no-caps to="/register">Register</q-btn>
                     <q-btn no-caps color="secondary" unelevated to="/login">Login</q-btn>
-                <!-- </div>
-                <div v-else> -->
+                </div>
+                <div v-else>
                     <q-btn flat icon="search" round></q-btn>
                     <q-btn flat icon="notifications" round>
                         <q-badge color="red" floating>4</q-badge>
@@ -68,7 +70,7 @@
                         <q-avatar size="42px">
                             <img src="https://pbs.twimg.com/profile_images/1642568071046119428/xtyyRarT_400x400.jpg">
                         </q-avatar>
-                        <q-menu fit>
+                        <q-menu max-width>
                             <q-list>
                                 <q-item>
                                     <q-item-section top avatar>
@@ -77,18 +79,18 @@
                                         </q-avatar>
                                     </q-item-section>
                                     <q-item-section>
-                                        <q-item-label>John Doe</q-item-label>
-                                        <q-item-label caption lines="1">johndoe@email.com</q-item-label>
+                                        <q-item-label>{{ authStore.getAuthUser.name }}</q-item-label>
+                                        <q-item-label caption lines="1">{{ authStore.getAuthUser.email }}</q-item-label>
                                     </q-item-section>
                                 </q-item>
                                 <q-separator />
-                                <q-item clickable>
+                                <q-item clickable to="/reservations">
                                     <q-item-section avatar>
                                         <q-icon name="date_range" />
                                     </q-item-section>
                                     <q-item-section>Reservations</q-item-section>
                                 </q-item>
-                                <q-item clickable>
+                                <q-item clickable to="/tickets">
                                     <q-item-section avatar>
                                         <q-icon name="confirmation_number" />
                                     </q-item-section>
@@ -101,7 +103,7 @@
                                     <q-item-section>Orders</q-item-section>
                                 </q-item>
                                 <q-separator />
-                                <q-item clickable>
+                                <q-item clickable to="/settings">
                                     <q-item-section avatar>
                                         <q-icon name="manage_accounts" />
                                     </q-item-section>
@@ -116,7 +118,7 @@
                             </q-list>
                         </q-menu>
                     </q-btn>
-                <!-- </div> -->
+                </div>
             </q-toolbar>
         </q-header>
 

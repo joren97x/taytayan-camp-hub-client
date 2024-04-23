@@ -3,18 +3,40 @@
     import { ref } from 'vue'
 
     const slide = ref('style1')
+    import { useAuthStore } from 'src/stores/auth-store'
+    import { useRouter } from 'vue-router'
+
+    const router = useRouter()
+    const authStore = useAuthStore()
+    async function onLogout() {
+        try {
+            const response = await authStore.handleLogout()
+            if(response.status === 204) {
+                router.push('/login')
+            }
+        } catch (error) {
+            console.error(error)
+            alert('Something went wrong bruh...')
+        }
+    }
 
 </script>
 
 <template>
     <div class="row q-col-gutter-xl">
+        <q-item clickable @click="onLogout()">
+            <q-item-section avatar>
+                <q-icon name="logout" />
+            </q-item-section>
+            <q-item-section>Logout</q-item-section>
+        </q-item>
         <div class="col-6">
-        <div>
-            <p class="text-start text-h3 q-mt-xl text-weight-medium">Lorem ipsum dolor emit ambatukam</p>
-            <p class="text-start text-h6 text-weight-regular"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus accusantium, numquam porro, exercitationem quos debitis fugit ducimus </p>
-            <q-btn size="lg" unelevated color="blue" no-caps> Create your account - it's free! </q-btn>
+            <div>
+                <p class="text-start text-h3 q-mt-xl text-weight-medium">Lorem ipsum dolor emit ambatukam</p>
+                <p class="text-start text-h6 text-weight-regular"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus accusantium, numquam porro, exercitationem quos debitis fugit ducimus </p>
+                <q-btn size="lg" unelevated color="blue" no-caps> Create your account - it's free! </q-btn>
+            </div>
         </div>
-    </div>
         <div class="col-6">
             <q-img src="https://cdn.quasar.dev/img/mountains.jpg"></q-img>
         </div>

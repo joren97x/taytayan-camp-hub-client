@@ -7,8 +7,9 @@ export const useAuthStore = defineStore('auth', {
         authErrors: {},
         authStatus: {}
     }),
+    persist: true,
     getters: {
-        getAuth: (state) => state.authUser,
+        getAuthUser: (state) => state.authUser,
         isAuthenticated: (state) => state.authUser ? true : false
     },
     actions: {
@@ -23,18 +24,19 @@ export const useAuthStore = defineStore('auth', {
         },
         async handleLogin(credentials) {
             try {
-                this.authErrors = null
+                this.authErrors = {}
                 await this.fetchToken()
                 const response = await api.post('/login', credentials)
                 return response
             } catch (error) {
+                console.error(error)
                 this.authErrors = error.response.data.errors
                 return error
             }
         },
         async handleRegister(credentials) {
             try {
-                this.authErrors = null
+                this.authErrors = {}
                 await this.fetchToken()
                 const response = await api.post('/register', credentials)
                 return response 
@@ -45,8 +47,8 @@ export const useAuthStore = defineStore('auth', {
         },
         async handleForgotPassword(email) {
             try {
-                this.authStatus = null
-                this.authErrors = null
+                this.authStatus = {}
+                this.authErrors = {}
                 await this.fetchToken()
                 const response = await api.post('/forgot-password', { email })
                 this.authStatus = response.data
@@ -58,7 +60,7 @@ export const useAuthStore = defineStore('auth', {
         },
         async handleResetPassword(credentials) {
             try {
-                this.authErrors = null
+                this.authErrors = {}
                 await this.fetchToken()
                 const response = await api.post('/reset-password', credentials)
                 return response 
@@ -71,7 +73,9 @@ export const useAuthStore = defineStore('auth', {
         async handleLogout() {
             try {
                 const response = await api.post('/logout')
+                console.log(response)
                 if(response.status === 204) {
+                    localStorage.removeItem('auth')
                     this.authUser = null
                 }
                 return response 

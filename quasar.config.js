@@ -92,7 +92,7 @@ module.exports = configure(function (/* ctx */) {
           textColor: 'white',
           message: 'Hi this is a message',
           html: false,
-          position: 'top'
+          position: 'bottom'
         },
         dark: true,
         brand: {

@@ -22,6 +22,12 @@ const authRoutes = [
                 path: 'password-reset/:token',
                 name: 'PasswordReset',
                 component: () => import('pages/Auth/PasswordReset.vue')
+            },
+            {
+                path: 'verify-email',
+                name: 'VerifyEmail',
+                component: () => import('pages/Auth/VerifyEmail.vue'),
+                meta: { requiresAuth: true }
             }
         ]
     }

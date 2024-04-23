@@ -21,7 +21,26 @@ const userRoutes = [
             {
                 path: '/orders',
                 name: 'Orders',
-                component: () => import('pages/User/Milkteas/Orders.vue')
+                component: () => import('pages/User/Milkteas/Orders.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/tickets',
+                name: 'Tickets',
+                component: () => import('pages/User/Events/Tickets.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/reservations',
+                name: 'Reservations',
+                component: () => import('pages/User/Campsites/Reservations.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: '/settings',
+                name: 'Settings',
+                component: () => import('pages/User/Settings.vue'),
+                meta: { requiresAuth: true }
             },
             { 
                 path: 'events', 
@@ -48,5 +67,6 @@ const userRoutes = [
         component: () => import('pages/ErrorNotFound.vue')
     }
 ]
+
 
 export default userRoutes

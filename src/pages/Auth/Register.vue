@@ -2,8 +2,10 @@
 
     import { ref } from 'vue'
     import { useAuthStore } from 'src/stores/auth-store'
+    import { useRouter } from 'vue-router'
 
     const authStore = useAuthStore()
+    const router = useRouter()
     const showPassword = ref(false)
     const showPassword2 = ref(false)
     const form = ref({
@@ -18,6 +20,10 @@
         try {
             registerBtn.value = true
             const response = await authStore.handleRegister(form.value)
+            if(response.status === 204) {
+                await authStore.fetchUser()
+                router.push('/')
+            }
             registerBtn.value = false
         } catch (error) {
             registerBtn.value = false

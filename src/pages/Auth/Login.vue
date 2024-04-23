@@ -17,14 +17,15 @@
         try {
             loginBtn.value = true
             const response = await authStore.handleLogin(form.value)
+            console.log(response)
             if(response.status === 204) {
                 await authStore.fetchUser()
                 router.push('/')
             }
             loginBtn.value = false
         } catch (error) {
-            loginBtn.value = false
             console.error(error)
+            loginBtn.value = false
         }
     }
 
@@ -33,7 +34,6 @@
 <template>
     <q-form @submit="onSubmit()">
         <q-card class="q-pa-xl" flat>
-            {{ authStore.authErrors }}
             <q-card-section>
                 <div class="text-h6 q-mb-lg">Login to Taytayan Camp Hub</div>
                 <q-input
