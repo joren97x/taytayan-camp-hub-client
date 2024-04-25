@@ -17,9 +17,15 @@ export const useAuthStore = defineStore('auth', {
             await api.get('../sanctum/csrf-cookie')
         },
         async fetchUser() {
-            const response = await api.get('/user')
-            if(response.status === 200) {
-                this.authUser = response.data
+            try {
+                const response = await api.get('/user')
+                if(response.status === 200) {
+                    this.authUser = response.data
+                    return response.data
+                }
+            } catch (error) {
+                // Clear authUser if the session is expired or invalid
+                this.authUser = null;
             }
         },
         async handleLogin(credentials) {
@@ -71,12 +77,13 @@ export const useAuthStore = defineStore('auth', {
             }
         },
         async handleLogout() {
+            this.authUser = null
             try {
+                await this.fetchToken()
                 const response = await api.post('/logout')
                 console.log(response)
                 if(response.status === 204) {
                     localStorage.removeItem('auth')
-                    this.authUser = null
                 }
                 return response 
             } catch (error) {

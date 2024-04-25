@@ -7,6 +7,7 @@
 
     const $q = useQuasar()
     const authStore = useAuthStore()
+    const profileFormBtn = ref(false)
     const profileForm = ref({
         name: authStore.authUser.name,
         email: authStore.authUser.email
@@ -19,14 +20,17 @@
     })
 
     async function resendVerEmail() {
-        api.post('/email/verification-notification')
-        .then((res) => {
-            $q.notify('Email verification sent. Please check your email.')
-            console.log(res)
-        })
-        .catch((err) => {
-            console.error(err)
-        })
+        profileFormBtn.value = true
+        try {
+            const response = await api.post('/email/verification-notification')
+            if(response) {
+                $q.notify('Email verification sent. Please check your email.')
+            }
+            profileFormBtn.value = false
+        } catch (error) {
+            profileFormBtn.value = false
+            console.error(error)
+        }
     }
 
 </script>
@@ -34,36 +38,38 @@
 <template>
     <div>
         <p class="q-my-xl text-negative text-center">not working right neow</p>
-        <q-card>
-            <q-card-section>
-                <div class="text-h6 q-mb-sm">Profile Information</div>
-                <div class="q-mb-lg">Update your account's profile information and email address.</div>
-                <q-input
-                    filled
-                    v-model="profileForm.name"
-                    label="Name"
-                    lazy-rules
-                    :error="authStore.authErrors?.name ? true : false"
-                    :error-message="authStore.authErrors?.name ? authStore.authErrors.name[0] : ''"
-                    :rules="[ val => val && val.length > 0 || 'Please type something']"
-                />
-                <q-input
-                    filled
-                    v-model="profileForm.email"
-                    label="Email Address"
-                    lazy-rules
-                    :hint="authStore.authUser.email_verified_at ? 'Verified' : ''"
-                    :error="authStore.authErrors?.email ? true : false"
-                    :error-message="authStore.authErrors?.email ? authStore.authErrors.email[0] : ''"
-                    :rules="[ val => val && val.length > 0 || 'Please type something']"
-                />
-                <q-banner :class="$q.dark.isActive ? 'bg-grey-8' : 'bg-grey-4'" v-if="!authStore.authUser.email_verified_at">
-                    Your email has not been verified.
-                    <q-btn outline no-caps @click="resendVerEmail()" color="blue" label="Resend Verification Email" />
-                </q-banner>
-                <q-btn label="Save" class="q-mt-sm" unelevated no-caps color="blue" />
-            </q-card-section>
-        </q-card>
+        <q-form @submit="resendVerEmail()">
+            <q-card>
+                <q-card-section>
+                    <div class="text-h6 q-mb-sm">Profile Information</div>
+                    <div class="q-mb-lg">Update your account's profile information and email address.</div>
+                    <q-input
+                        filled
+                        v-model="profileForm.name"
+                        label="Name"
+                        lazy-rules
+                        :error="authStore.authErrors?.name ? true : false"
+                        :error-message="authStore.authErrors?.name ? authStore.authErrors.name[0] : ''"
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                    />
+                    <q-input
+                        filled
+                        v-model="profileForm.email"
+                        label="Email Address"
+                        lazy-rules
+                        :hint="authStore.authUser.email_verified_at ? 'Verified' : ''"
+                        :error="authStore.authErrors?.email ? true : false"
+                        :error-message="authStore.authErrors?.email ? authStore.authErrors.email[0] : ''"
+                        :rules="[ val => val && val.length > 0 || 'Please type something']"
+                    />
+                    <q-banner :class="$q.dark.isActive ? 'bg-grey-8' : 'bg-grey-4'" v-if="!authStore.authUser.email_verified_at">
+                        Your email has not been verified.
+                        <q-btn outline no-caps @click="resendVerEmail()" :loading="profileFormBtn" color="blue" label="Resend Verification Email" />
+                    </q-banner>
+                    <q-btn label="Save" type="submit" class="q-mt-sm" unelevated no-caps color="blue" />
+                </q-card-section>
+            </q-card>
+        </q-form>
         <q-card class="q-mt-xl">
             <q-card-section>
                 <div class="text-h6 q-mb-sm">Update Password</div>

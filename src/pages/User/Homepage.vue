@@ -10,6 +10,7 @@
     const authStore = useAuthStore()
     async function onLogout() {
         try {
+            // authStore.authUser = null
             const response = await authStore.handleLogout()
             if(response.status === 204) {
                 router.push('/login')
@@ -20,16 +21,12 @@
         }
     }
 
+
+
 </script>
 
 <template>
     <div class="row q-col-gutter-xl">
-        <q-item clickable @click="onLogout()">
-            <q-item-section avatar>
-                <q-icon name="logout" />
-            </q-item-section>
-            <q-item-section>Logout</q-item-section>
-        </q-item>
         <div class="col-6">
             <div>
                 <p class="text-start text-h3 q-mt-xl text-weight-medium">Lorem ipsum dolor emit ambatukam</p>

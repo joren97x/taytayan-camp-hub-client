@@ -18,8 +18,6 @@
                 router.push('/login')
             }
         } catch (error) {
-            authStore.authUser = null
-            localStorage.removeItem('auth')
             console.error(error)
             alert('Something went wrong bruh...')
         }
